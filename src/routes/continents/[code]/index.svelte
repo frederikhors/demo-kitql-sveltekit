@@ -1,23 +1,13 @@
+<script context="module" lang="ts">
+	import { KQL_AllCountriesOfContinent } from '$lib/kitql/generated/stores';
+
+	export async function load({ fetch, url, params, session, stuff }) {
+		await KQL_AllCountriesOfContinent.query({ fetch, variables: { code: params.code } });
+		return {};
+	}
+</script>
+
 <script lang="ts">
-	import { page } from '$app/stores';
-	import { KQL_AllContinents, KQL_AllCountriesOfContinent } from '$lib/kitql/generated/stores';
-	import { onMount } from 'svelte';
-
-	const continentForPatch = $KQL_AllContinents.data?.continents.find(
-		(c) => c.code === $page.params.code
-	);
-
-	// console.log('continentForPatch:', continentForPatch);
-
-	// KQL_AllCountriesOfContinent.patch({ continent: continentForPatch });
-
-	onMount(() => {
-		KQL_AllCountriesOfContinent.query({ variables: { code: $page.params.code } });
-		// No need this here. Global setting available here: src/lib/kitql/kitQLClient.ts
-		// setTimeout(() => {
-		// 	// I'm using this to simluate a backend delay
-		// }, 5000);
-	});
 </script>
 
 <h1 class="text-xl">
