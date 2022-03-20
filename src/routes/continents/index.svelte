@@ -1,7 +1,17 @@
-<script lang="ts">
+<script context="module" lang="ts">
 	import { KQL_AllContinents } from '$lib/kitql/generated/stores';
 
-	KQL_AllContinents.query();
+	export async function load({ url, fetch, session, stuff }) {
+		await KQL_AllContinents.query({ fetch });
+		return {};
+	}
+</script>
+
+<script lang="ts">
+	// import { browser } from '$app/env';
+
+	// If you want to use it ONLY client mode, but if you want NETWORK or SSR, put it in the module
+	// $: browser && KQL_AllContinents.query();
 </script>
 
 <h1 class="text-xl">Continents</h1>
@@ -27,9 +37,5 @@
 		{/if}
 	</div>
 
-	<pre class="whitespace-pre-wrap text-xs">{JSON.stringify(
-			$KQL_AllContinents,
-			null,
-			' '
-		)}</pre>
+	<pre class="whitespace-pre-wrap text-xs">{JSON.stringify($KQL_AllContinents, null, ' ')}</pre>
 </div>
