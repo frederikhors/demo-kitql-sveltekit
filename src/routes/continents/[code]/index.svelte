@@ -9,13 +9,14 @@
 
 	// console.log('continentForPatch:', continentForPatch);
 
-	KQL_AllCountriesOfContinent.patch({ continent: continentForPatch });
+	// KQL_AllCountriesOfContinent.patch({ continent: continentForPatch });
 
 	onMount(() => {
-		setTimeout(() => {
-			// I'm using this to simluate a backend delay
-			KQL_AllCountriesOfContinent.query({ variables: { code: $page.params.code } });
-		}, 5000);
+		KQL_AllCountriesOfContinent.query({ variables: { code: $page.params.code } });
+		// No need this here. Global setting available here: src/lib/kitql/kitQLClient.ts
+		// setTimeout(() => {
+		// 	// I'm using this to simluate a backend delay
+		// }, 5000);
 	});
 </script>
 
