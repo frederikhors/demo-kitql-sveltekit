@@ -26,7 +26,7 @@
 			{/each}
 		{:else}
 			<ul>
-				{#each $KQL_AllContinents.data.continents as continent}
+				{#each $KQL_AllContinents.data?.continents || [] as continent}
 					<li class="my-3 text-lg">
 						<a href="/continents/{continent.code}">
 							{continent.code} - {continent.name}

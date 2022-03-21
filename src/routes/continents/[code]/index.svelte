@@ -1,19 +1,40 @@
 <script context="module" lang="ts">
-	import { KQL_AllCountriesOfContinent } from '$lib/kitql/generated/stores';
+	import { page } from '$app/stores';
+	import { KQL_AllContinents, KQL_AllCountriesOfContinent } from '$lib/kitql/generated/stores';
+	import { onMount } from 'svelte';
 
 	export async function load({ fetch, url, params, session, stuff }) {
-		await KQL_AllCountriesOfContinent.query({ fetch, variables: { code: params.code } });
+		// await KQL_AllCountriesOfContinent.query({ fetch, variables: { code: params.code } });
 		return {};
 	}
 </script>
 
 <script lang="ts">
+	onMount(() => {
+		const code = $page.params.code;
+		const continentFound = $KQL_AllContinents.data?.continents.find((c) => c.code === code);
+
+		KQL_AllCountriesOfContinent.patch(
+			{
+				continent: {
+					name: 'PATCH... ' + (continentFound?.name ?? 'No data for Opti UI yet'),
+					code,
+					countries: []
+				}
+			},
+			{ code },
+			'store-only'
+		);
+		KQL_AllCountriesOfContinent.query({
+			variables: { code }
+		});
+	});
 </script>
 
 <h1 class="text-xl">
 	<a href="/continents">&laquo; Go back</a> | Continent:
-	<b>{$KQL_AllCountriesOfContinent.data.continent?.name}</b>
-	({$KQL_AllCountriesOfContinent.data.continent?.code})
+	<b>{$KQL_AllCountriesOfContinent.data?.continent?.name}</b>
+	({$KQL_AllCountriesOfContinent.data?.continent?.code})
 </h1>
 
 <div class="grid grid-cols-3 mt-4">
@@ -26,7 +47,7 @@
 			{/each}
 		{:else}
 			<ul>
-				{#each $KQL_AllCountriesOfContinent.data.continent?.countries || [] as country}
+				{#each $KQL_AllCountriesOfContinent.data?.continent?.countries || [] as country}
 					<li class="my-3 text-lg">
 						{country.code} - {country.name}
 					</li>
