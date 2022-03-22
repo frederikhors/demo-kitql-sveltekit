@@ -1,18 +1,17 @@
 <script context="module" lang="ts">
 	import { KQL_AllContinents } from '$lib/kitql/generated/stores';
+	import { KitQLInfo } from '@kitql/comp';
 
 	export async function load({ url, fetch, session, stuff }) {
-		await KQL_AllContinents.query({ fetch });
+		await KQL_AllContinents.queryLoad({ fetch });
 		return {};
 	}
 </script>
 
 <script lang="ts">
-	// import { browser } from '$app/env';
-
-	// If you want to use it ONLY client mode, but if you want NETWORK or SSR, put it in the module
-	// $: browser && KQL_AllContinents.query();
 </script>
+
+<KitQLInfo store={KQL_AllContinents} />
 
 <h1 class="text-xl">Continents</h1>
 

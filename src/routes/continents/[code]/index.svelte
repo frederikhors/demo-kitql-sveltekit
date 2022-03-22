@@ -1,18 +1,11 @@
 <script context="module" lang="ts">
-	import { page } from '$app/stores';
 	import { KQL_AllContinents, KQL_AllCountriesOfContinent } from '$lib/kitql/generated/stores';
-	import { onMount } from 'svelte';
+	import { get } from 'svelte/store';
+	import { KitQLInfo } from '@kitql/comp';
 
 	export async function load({ fetch, url, params, session, stuff }) {
-		// await KQL_AllCountriesOfContinent.query({ fetch, variables: { code: params.code } });
-		return {};
-	}
-</script>
-
-<script lang="ts">
-	onMount(() => {
-		const code = $page.params.code;
-		const continentFound = $KQL_AllContinents.data?.continents.find((c) => c.code === code);
+		const code = params.code;
+		const continentFound = get(KQL_AllContinents).data?.continents.find((c) => c.code === code);
 
 		KQL_AllCountriesOfContinent.patch(
 			{
@@ -25,10 +18,15 @@
 			{ code },
 			'store-only'
 		);
-		KQL_AllCountriesOfContinent.query({
+		KQL_AllCountriesOfContinent.queryLoad({
+			fetch,
 			variables: { code }
 		});
-	});
+		return {};
+	}
+</script>
+
+<script lang="ts">
 </script>
 
 <h1 class="text-xl">
@@ -58,9 +56,13 @@
 		{/if}
 	</div>
 
-	<pre class="whitespace-pre-wrap text-xs">{JSON.stringify(
+	<KitQLInfo store={KQL_AllCountriesOfContinent} />
+
+	<!-- Maybe 👆 is nicer than 👇 -->
+
+	<!-- <pre class="whitespace-pre-wrap text-xs">{JSON.stringify(
 			$KQL_AllCountriesOfContinent,
 			null,
 			' '
-		)}</pre>
+		)}</pre> -->
 </div>
