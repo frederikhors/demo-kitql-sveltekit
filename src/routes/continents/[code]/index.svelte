@@ -57,12 +57,4 @@
 	</div>
 
 	<KitQLInfo store={KQL_AllCountriesOfContinent} />
-
-	<!-- Maybe 👆 is nicer than 👇 -->
-
-	<!-- <pre class="whitespace-pre-wrap text-xs">{JSON.stringify(
-			$KQL_AllCountriesOfContinent,
-			null,
-			' '
-		)}</pre> -->
 </div>
