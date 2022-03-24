@@ -1,8 +1,17 @@
-<script lang="ts">
+<script context="module" lang="ts">
 	import { KQL_AllContinents } from '$lib/kitql/generated/stores';
+	import { KitQLInfo } from '@kitql/comp';
 
-	KQL_AllContinents.query();
+	export async function load({ url, fetch, session, stuff }) {
+		await KQL_AllContinents.queryLoad({ fetch });
+		return {};
+	}
 </script>
+
+<script lang="ts">
+</script>
+
+<KitQLInfo store={KQL_AllContinents} />
 
 <h1 class="text-xl">Continents</h1>
 
@@ -16,7 +25,7 @@
 			{/each}
 		{:else}
 			<ul>
-				{#each $KQL_AllContinents.data.continents as continent}
+				{#each $KQL_AllContinents.data?.continents || [] as continent}
 					<li class="my-3 text-lg">
 						<a href="/continents/{continent.code}">
 							{continent.code} - {continent.name}
@@ -27,9 +36,5 @@
 		{/if}
 	</div>
 
-	<pre class="whitespace-pre-wrap text-xs">{JSON.stringify(
-			$KQL_AllContinents,
-			null,
-			' '
-		)}</pre>
+	<pre class="whitespace-pre-wrap text-xs">{JSON.stringify($KQL_AllContinents, null, ' ')}</pre>
 </div>

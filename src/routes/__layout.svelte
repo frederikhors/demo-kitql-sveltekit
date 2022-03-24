@@ -1,6 +1,9 @@
 <script lang="ts">
-	import "$lib/style.postcss";
+	import '$lib/style.postcss';
+	import { InitClientNavigation } from '@kitql/comp';
 </script>
+
+<InitClientNavigation />
 
 <div class="container mx-auto mt-8">
 	<div class="text-center text-lg">
