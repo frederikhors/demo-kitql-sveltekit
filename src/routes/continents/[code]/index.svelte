@@ -18,10 +18,13 @@
 			{ code },
 			'store-only'
 		);
+
 		KQL_AllCountriesOfContinent.queryLoad({
 			fetch,
-			variables: { code }
+			variables: { code },
+			settings: { policy: 'cache-and-network' }
 		});
+
 		return {};
 	}
 </script>
@@ -32,12 +35,13 @@
 <h1 class="text-xl">
 	<a href="/continents">&laquo; Go back</a> | Continent:
 	<b>{$KQL_AllCountriesOfContinent.data?.continent?.name}</b>
-	({$KQL_AllCountriesOfContinent.data?.continent?.code})
+	({$KQL_AllCountriesOfContinent.data?.continent?.code}) | isFetching:
+	<b>{$KQL_AllCountriesOfContinent.isFetching}</b>
 </h1>
 
 <div class="grid grid-cols-3 mt-4">
 	<div class="col-span-2">
-		{#if $KQL_AllCountriesOfContinent.isFetching}
+		{#if $KQL_AllCountriesOfContinent.isFetching && !$KQL_AllCountriesOfContinent.data}
 			Loading...
 		{:else if $KQL_AllCountriesOfContinent.errors}
 			{#each $KQL_AllCountriesOfContinent.errors as error}
