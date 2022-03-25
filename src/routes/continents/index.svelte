@@ -1,6 +1,6 @@
 <script context="module" lang="ts">
 	import { KQL_AllContinents } from '$lib/kitql/generated/stores';
-	import { KitQLInfo } from '@kitql/comp';
+	import { KitQLInfo } from '@kitql/all-in';
 
 	export async function load({ url, fetch, session, stuff }) {
 		await KQL_AllContinents.queryLoad({ fetch });

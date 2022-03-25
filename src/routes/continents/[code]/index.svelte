@@ -1,7 +1,7 @@
 <script context="module" lang="ts">
 	import { KQL_AllContinents, KQL_AllCountriesOfContinent } from '$lib/kitql/generated/stores';
 	import { get } from 'svelte/store';
-	import { KitQLInfo } from '@kitql/comp';
+	import { KitQLInfo } from '@kitql/all-in';
 
 	export async function load({ fetch, url, params, session, stuff }) {
 		const code = params.code;
