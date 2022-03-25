@@ -29,36 +29,27 @@
 	}
 </script>
 
-<script lang="ts">
-</script>
-
-<h1 class="text-xl">
+<h1>
 	<a href="/continents">&laquo; Go back</a> | Continent:
 	<b>{$KQL_AllCountriesOfContinent.data?.continent?.name}</b>
 	({$KQL_AllCountriesOfContinent.data?.continent?.code}) | isFetching:
 	<b>{$KQL_AllCountriesOfContinent.isFetching}</b>
 </h1>
 
-<div class="grid grid-cols-3 mt-4">
-	<div class="col-span-2">
-		{#if $KQL_AllCountriesOfContinent.isFetching && !$KQL_AllCountriesOfContinent.data}
-			Loading...
-		{:else if $KQL_AllCountriesOfContinent.errors}
-			{#each $KQL_AllCountriesOfContinent.errors as error}
-				{error}
-			{/each}
+{#if $KQL_AllCountriesOfContinent.isFetching && !$KQL_AllCountriesOfContinent.data}
+	Loading...
+{:else if $KQL_AllCountriesOfContinent.errors}
+	{#each $KQL_AllCountriesOfContinent.errors as error}
+		{error}
+	{/each}
+{:else}
+	<ul>
+		{#each $KQL_AllCountriesOfContinent.data?.continent?.countries || [] as country}
+			<li>
+				{country.code} - {country.name}
+			</li>
 		{:else}
-			<ul>
-				{#each $KQL_AllCountriesOfContinent.data?.continent?.countries || [] as country}
-					<li class="my-3 text-lg">
-						{country.code} - {country.name}
-					</li>
-				{:else}
-					No countries
-				{/each}
-			</ul>
-		{/if}
-	</div>
-
-	<KitQLInfo store={KQL_AllCountriesOfContinent} />
-</div>
+			No countries
+		{/each}
+	</ul>
+{/if}
